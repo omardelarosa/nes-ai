@@ -30,3 +30,10 @@ For example:
 ```
 python megaman_agent.py
 ```
+
+## Contribution
+
+1. Create a feature branch
+2. Complete changes
+3. Open a PR against `master` branch
+4. Merge PR.
