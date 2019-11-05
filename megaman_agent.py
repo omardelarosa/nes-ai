@@ -2,7 +2,7 @@ from megaman_env import MegamanEnv
 from nes_py.wrappers import JoypadSpace
 import time
 
-ROM_PATH = "./roms/megaman2.nes"
+ROM_PATH = "./roms/zelda2.nes"
 
 """The main entry point for the command line interface."""
 # get arguments from the command line

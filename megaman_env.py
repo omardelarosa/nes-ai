@@ -35,8 +35,17 @@ class MegamanEnv(NESEnv):
 
         """
 
+        # TWO Ways of analyzing state:
+
+        # 1. as RAM: array
         print("RAM: ", self.ram)  # debugging RAM
 
+        # 2. as Screen Image Array
+
+        # https://github.com/Kautenja/nes-py/blob/master/nes_py/nes_env.py#L69
+        # shape of the screen as 32-bit RGB (C++ memory arrangement)
+        ## SCREEN_SHAPE_32_BIT = SCREEN_HEIGHT, SCREEN_WIDTH, 4
+        print("Screen: ", self.screen.shape)  # debugging screen
         pass
 
     def _get_reward(self):
