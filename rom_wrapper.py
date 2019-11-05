@@ -1,13 +1,17 @@
 """An OpenAI Gym interface to the NES game MEGAMAN2"""
 from nes_py import NESEnv
 
+"""
+This is a generic wrapper based on the example on nes_py wiki
+"""
 
-class MegamanEnv(NESEnv):
+
+class ROMWrapper(NESEnv):
     """An OpenAI Gym interface to the NES game MEGAMAN2"""
 
     def __init__(self, rom_path):
         """Initialize a new MEGAMAN2 environment."""
-        super(MegamanEnv, self).__init__(rom_path)
+        super(ROMWrapper, self).__init__(rom_path)
         # setup any variables to use in the below callbacks here
 
     def _will_reset(self):
@@ -62,4 +66,4 @@ class MegamanEnv(NESEnv):
 
 
 # explicitly define the outward facing API for the module
-__all__ = [MegamanEnv.__name__]
+__all__ = [ROMWrapper.__name__]

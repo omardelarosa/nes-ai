@@ -1,6 +1,10 @@
-# NES AI
+# Nintendo AI
 
-AI Agents for Nintendo/Famicom.
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Nintendo_gray_logo.svg/200px-Nintendo_gray_logo.svg.png)
+
+General AI Agents, wrappers and tools for Nintendo/Famicom ROMs.
+
+BYOR (Bring your own roms)
 
 ## Installation Requirements
 
@@ -17,7 +21,7 @@ python -e .
 
 This allows for extensibility.
 
-## Running
+## Usage
 
 To run any agent, run:
 
@@ -30,6 +34,10 @@ For example:
 ```
 python megaman_agent.py
 ```
+
+## Fixing ROMs
+
+Some ROMs require header corrections. Please see [tools/](tools/) directory for instructions on fixing your ROM files.
 
 ## Contribution
 

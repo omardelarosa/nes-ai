@@ -2,7 +2,7 @@ from rom_wrapper import ROMWrapper
 from nes_py.wrappers import JoypadSpace
 import time
 
-ROM_PATH = "./roms/megaman2.nes"
+ROM_PATH = "./roms/zelda.nes"
 
 """The main entry point for the command line interface."""
 # get arguments from the command line
@@ -12,10 +12,10 @@ env = ROMWrapper(ROM_PATH)
 actions = [
     ['start'],
     ['NOOP'],
-    ['right', 'A'],
-    ['left', 'A'],
-    ['left', 'B'],
-    ['right', 'B'],
+    ['right'],
+    ['left'],
+    ['left'],
+    ['right'],
     ['A'],
     ['B']
 ]
@@ -28,11 +28,13 @@ env.reset()
 action = 0
 # play_human
 for t in range(0, 5000):
+    # favor start during menu screen
+    # if t < 500:
+    #     action = 0
     # change action every 6 frames
     if t % 6 == 0:
+        # while action == 0:
         action = env.action_space.sample()
-
-        # after 500 timesteps, stop pressing start button
         if t > 500:
             while action == 0:
                 action = env.action_space.sample()
