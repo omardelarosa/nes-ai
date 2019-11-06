@@ -43,7 +43,7 @@ class ROMWrapper(NESEnv):
 
         # 1. as RAM: array
         print("RAM: ", self.ram)  # debugging RAM
-
+        print("MEGAMAN SCORE: ", self.ram[114:120])
         # 2. as Screen Image Array
 
         # https://github.com/Kautenja/nes-py/blob/master/nes_py/nes_env.py#L69

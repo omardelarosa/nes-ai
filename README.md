@@ -2,7 +2,7 @@
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Nintendo_gray_logo.svg/200px-Nintendo_gray_logo.svg.png)
 
-General AI Agents, wrappers and tools for Nintendo/Famicom ROMs.
+Generic Open AI Gym Agents, wrappers and tools for Nintendo/Famicom ROMs.
 
 BYOR (Bring your own roms)
 
@@ -11,6 +11,7 @@ BYOR (Bring your own roms)
 Both of these libraries must be installed.
 
 [OpenAI Gym](https://github.com/openai/gym)
+
 [nes-py](https://github.com/Kautenja/nes-py)
 
 It's recommended that they are cloned as repositories and installed from git repos using:
@@ -23,16 +24,16 @@ This allows for extensibility.
 
 ## Usage
 
-To run any agent, run:
+To run any with human keyboard control agent, run:
 
 ```
-python name-of-agent.py
+python name_of_agent.py --mode human --rom roms/rom.nes
 ```
 
-For example:
+To use the random sample agent
 
 ```
-python megaman_agent.py
+python generic_agent.py --mode random --rom roms/rom.nes
 ```
 
 ## Fixing ROMs
