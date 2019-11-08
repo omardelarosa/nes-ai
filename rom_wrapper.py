@@ -16,6 +16,7 @@ class ROMWrapper(NESEnv):
         self.last_screen = None
         self.screen_distance = 0
         self.step_num = 0
+        self.score = 0.0
         # setup any variables to use in the below callbacks here
 
     def _will_reset(self):
@@ -47,7 +48,12 @@ class ROMWrapper(NESEnv):
 
         # 1. as RAM: array
         # print("RAM: ", self.ram)  # debugging RAM
-        print("MEGAMAN SCORE: ", self.ram[114:120])
+        # print("MEGAMAN SCORE: ", self.ram[114:120])
+        score_vec = self.ram[114:120]
+        self.score = 0.0
+        for i in range(0, len(score_vec)):
+            self.score = self.score + (score_vec[i] * 10**i)
+        # print("IntScore: ", self.score)
         # 2. as Screen Image Array
 
         # https://github.com/Kautenja/nes-py/blob/master/nes_py/nes_env.py#L69
@@ -65,7 +71,7 @@ class ROMWrapper(NESEnv):
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
-        return 0
+        return (self.screen_distance * 0.00001) + self.score
 
     def _get_done(self):
         """Return True if the episode is over, False otherwise."""
@@ -73,7 +79,9 @@ class ROMWrapper(NESEnv):
 
     def _get_info(self):
         """Return the info after a step occurs."""
-        return {}
+        return {
+            'ram': np.array(self.ram)
+        }
 
 
 # explicitly define the outward facing API for the module
