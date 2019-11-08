@@ -71,7 +71,9 @@ class ROMWrapper(NESEnv):
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
-        return (self.screen_distance * 0.00001) + self.score
+        screen_dist = (self.screen_distance * 0.0000001)
+        score = (self.score * 0.001)
+        return max(screen_dist, score)
 
     def _get_done(self):
         """Return True if the episode is over, False otherwise."""
