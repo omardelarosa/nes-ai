@@ -34,6 +34,8 @@ def play_random_custom(env, steps):
         ['left', 'A'],
         ['left', 'B'],
         ['right', 'B'],
+        ['up'],
+        ['down'],
         ['A'],
         ['B']
     ]
@@ -43,7 +45,7 @@ def play_random_custom(env, steps):
     env.reset()
 
     action = 0
-
+    start = time.time()
     # play_human
     for t in range(0, steps):
         # get the mapping of keyboard keys to actions in the environment
@@ -64,16 +66,18 @@ def play_random_custom(env, steps):
                     action = env.action_space.sample()
 
         observation, reward, done, info = env.step(action)
-        print("---------------------------t: ", t)
-        print("action space: ", action, env.action_space)
+        # print("---------------------------t: ", t)
+        # print("action space: ", action, env.action_space)
         # print("obs: ", observation)
-        print("reward: ", reward)
-        print("info: ", info)
+        # print("reward: ", reward)
+        # print("info: ", info)
         # runs game at about 60fps
         time.sleep(0.016667)
         env.render()
 
+    end = time.time()
     env.close()
+    print("time: ", (end - start), " seconds  for ", steps, "steps")
 
 
 if args.mode == 'human':
