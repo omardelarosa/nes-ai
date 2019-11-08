@@ -19,6 +19,22 @@ args = _get_args()
 # required arg
 rom_path = args.rom
 
+actions = [
+    ['start'],
+    ['NOOP'],
+    ['right', 'A'],
+    ['left', 'A'],
+    ['left', 'B'],
+    ['right', 'B'],
+    # ['down', 'A'],
+    # ['down', 'B'],
+    # ['up', 'A'],
+    # ['up', 'B'],
+    ['up'],
+    ['down'],
+    ['A'],
+    ['B']
+]
 
 # create the environment
 env = ROMWrapper(rom_path)
@@ -37,7 +53,7 @@ class Policy(nn.Module):
         super(Policy, self).__init__()
         self.affine1 = nn.Linear(FLAT_STATE_SIZE, 128)
         self.dropout = nn.Dropout(p=0.6)
-        self.affine2 = nn.Linear(128, 2)
+        self.affine2 = nn.Linear(128, len(actions))
 
         self.saved_log_probs = []
         self.rewards = []
@@ -98,29 +114,12 @@ def play_human_custom(env):
 def play_random_custom(env, steps):
     _NOP = 0
 
-    actions = [
-        ['start'],
-        ['NOOP'],
-        ['right', 'A'],
-        ['left', 'A'],
-        ['left', 'B'],
-        ['right', 'B'],
-        ['down', 'A'],
-        ['down', 'B'],
-        ['up', 'A'],
-        ['up', 'B'],
-        ['up'],
-        ['down'],
-        ['A'],
-        ['B']
-    ]
-
     env = JoypadSpace(env, actions)
 
     env.reset()
 
     action = 0
-    # start = time.time()
+    start = time.time()
 
     running_reward = 10
     for i_episode in count(1):
@@ -178,9 +177,9 @@ def play_random_custom(env, steps):
     #     time.sleep(0.016667)
     #     env.render()
 
-    # end = time.time()
-    # env.close()
-    # print("time: ", (end - start), " seconds  for ", steps, "steps")
+    end = time.time()
+    env.close()
+    print("time: ", (end - start), " seconds  for ", steps, "steps")
 
 
 if args.mode == 'human':
