@@ -27,13 +27,13 @@ This allows for extensibility.
 To run any with human keyboard control agent, run:
 
 ```
-python name_of_agent.py -a RandomAgent --mode human --rom roms/rom.nes
+python . -a RandomAgent --mode human --rom roms/rom.nes
 ```
 
 To use the random sample agent
 
 ```
-python generic_agent.py -a RandomAgent--mode random --rom roms/rom.nes
+python . -a RandomAgent--mode random --rom roms/rom.nes
 ```
 
 ## Adding Agents
