@@ -1,18 +1,9 @@
-from rom_wrapper import ROMWrapper
+from envs.rom_wrapper import ROMWrapper
 from nes_py.wrappers import JoypadSpace
 from nes_py._image_viewer import ImageViewer
 from nes_py.app.play_human import play_human
 from nes_py.app.cli import _get_args
 import time
-
-args = _get_args()
-
-# required arg
-rom_path = args.rom
-
-
-# create the environment
-env = ROMWrapper(rom_path)
 
 
 def play_human_custom(env):
@@ -80,9 +71,17 @@ def play_random_custom(env, steps):
     print("time: ", (end - start), " seconds  for ", steps, "steps")
 
 
-if args.mode == 'human':
-    print("Playing as human")
-    play_human_custom(env)
-else:
-    print("Playing with random custom agent")
-    play_random_custom(env, args.steps)
+class RandomAgent():
+    def __init__(self, args):
+        # required arg
+        rom_path = args.rom
+
+        # create the environment
+        env = ROMWrapper(rom_path)
+
+        if args.mode == 'human':
+            print("Playing as human")
+            play_human_custom(env)
+        else:
+            print("Playing with random custom agent")
+            play_random_custom(env, args.steps)

@@ -27,13 +27,37 @@ This allows for extensibility.
 To run any with human keyboard control agent, run:
 
 ```
-python name_of_agent.py --mode human --rom roms/rom.nes
+python name_of_agent.py -a RandomAgent --mode human --rom roms/rom.nes
 ```
 
 To use the random sample agent
 
 ```
-python generic_agent.py --mode random --rom roms/rom.nes
+python generic_agent.py -a RandomAgent--mode random --rom roms/rom.nes
+```
+
+## Adding Agents
+
+To add an agent:
+
+1. create a file in the `agents` directory using the naming convention `AgentName.py`.
+
+2. The file must implement and export a class matching this signature:
+
+```python
+class AgentName():
+    def __init__(self, args)
+        # do stuff here
+```
+
+3. Register your class in `agents/__init__.py` as follows:
+
+```python
+from . import AgentName
+
+__all__ = [
+    'AgentName'
+]
 ```
 
 ## Fixing ROMs
