@@ -22,6 +22,26 @@ python -e .
 
 This allows for extensibility.
 
+### Install script
+```
+mkdir nes-ai-root
+cd nes-ai-root
+
+git clone https://github.com/openai/gym.git
+cd gym
+pip3 install -e .
+cd ..
+
+git clone https://github.com/Kautenja/nes-py.git
+cd nes-py
+pip3 install -e 
+cd ..
+
+git clone https://github.com/omardelarosa/nes-ai.git
+cd nes-ai
+pip3 install -r requirements.txt
+```
+
 ## Usage
 
 To run any with human keyboard control agent, run:
