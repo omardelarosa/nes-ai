@@ -3,6 +3,7 @@ from nes_py.wrappers import JoypadSpace
 from nes_py._image_viewer import ImageViewer
 from nes_py.app.play_human import play_human
 from nes_py.app.cli import _get_args
+from app.state_manager import *
 import time
 import json
 
@@ -39,11 +40,7 @@ def play_random_custom(env, steps, ram):
     action = 0
     start = time.time()
 
-    for i in range(0, len(ram)):
-        env.ram[i] = ram[i]
-        print("ram:", env.ram[i], ram[i])
-
-    env.reset()
+    env.ram = ram
 
     # play_human
     for t in range(0, steps):
@@ -83,21 +80,20 @@ class RandomAgent():
     def __init__(self, args):
         # required arg
         rom_path = args.rom
+
+        # create the environment
+        env = ROMWrapper(rom_path)
+        ram = env.ram
         save_state_path = ""
         load_state_path = ""
         if args.savePath:
             save_state_path = args.savePath
+            print("Binding signal handler", save_state_path)
+            bind_signal_watcher(env, save_state_path)
         if args.loadState:
             load_state_path = args.loadState
-
-        # create the environment
-        env = ROMWrapper(rom_path, save_state_path, load_state_path)
-
-        ram = []
-        with open(load_state_path) as json_file:
-            data = json.load(json_file)
-            for p in data['ram']:
-                ram.append(p)
+            ram = load_state_from_json(load_state_path)
+            print("Loading RAM: ", ram)
 
         if args.mode == 'human':
             print("Playing as human")
