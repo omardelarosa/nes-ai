@@ -34,7 +34,7 @@ cd ..
 
 git clone https://github.com/Kautenja/nes-py.git
 cd nes-py
-pip3 install -e 
+pip3 install -e .
 cd ..
 
 git clone https://github.com/omardelarosa/nes-ai.git
