@@ -39,7 +39,7 @@ cd ..
 
 git clone https://github.com/omardelarosa/nes-ai.git
 cd nes-ai
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
