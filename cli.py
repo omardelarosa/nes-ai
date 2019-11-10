@@ -48,6 +48,18 @@ def _get_args():
                         help='Print all agent names'
                         )
 
+    # save state path
+    parser.add_argument('--savePath', '-ss',
+                        type=str,
+                        help='Saves the ram upon exiting to the following path'
+                        )
+
+    # load state path
+    parser.add_argument('--loadState', '-ls',
+                        type=str,
+                        help='Loads the RAM from the following path'
+                        )
+
     return parser.parse_args()
 
 

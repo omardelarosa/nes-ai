@@ -1,6 +1,12 @@
 """An OpenAI Gym interface to the NES game MEGAMAN2"""
 from nes_py import NESEnv
 import numpy as np
+import json
+import signal
+import sys
+import time
+import threading
+
 
 """
 This is a generic wrapper based on the example on nes_py wiki
@@ -10,27 +16,71 @@ This is a generic wrapper based on the example on nes_py wiki
 class ROMWrapper(NESEnv):
     """An OpenAI Gym interface to the NES game MEGAMAN2"""
 
-    def __init__(self, rom_path):
+    def __init__(self, rom_path, save_state_path="", load_state_path=""):
         """Initialize a new MEGAMAN2 environment."""
         super(ROMWrapper, self).__init__(rom_path)
         self.last_screen = None
         self.screen_distance = 0
         self.step_num = 0
         self.score = 0.0
+
+        # deal with the save states
+        self.should_save_state = False
+        self.save_state_path = save_state_path
+        if save_state_path != "":
+            self.should_save_state = True
+
+        self.should_load_state = False
+        self.load_state_path = load_state_path
+        if load_state_path != "":
+            self.should_load_state = True
+            self._load_ram_from_file()
+
         # setup any variables to use in the below callbacks here
+
+        signal.signal(signal.SIGINT, lambda x, y: self._signal_handler())
+
+    def _load_ram_from_file(self):
+        print("LOADING RAM")
+        # ram = []
+        # with open(self.load_state_path) as json_file:
+        #     data = json.load(json_file)
+        #     for p in data['ram']:
+        #         ram.append(p)
+
+        # for i in range(0, len(ram)):
+        #     self.ram[i] = ram[i]
+        #     print("ram: ", self.ram[i], ram[i])
+
+    def _save_state_to_file(self):
+        ram_list = []
+        for i in self.ram:
+            ram_list.append(int(i))
+        data = {}
+        data['ram'] = ram_list
+        with open(self.save_state_path, 'w') as outfile:
+            json.dump(data, outfile)
+            print("RAM saved to ", outfile)
+
+    def _signal_handler(self):
+        if self.should_save_state:
+            self._save_state_to_file()
+        sys.exit(0)
 
     def _will_reset(self):
         """Handle any RAM hacking after a reset occurs."""
         # use this method to perform setup before and episode resets.
         # the method returns None
-        pass
+        if self.should_load_state:
+            self._load_ram_from_file()
 
     def _did_reset(self):
         """Handle any RAM hacking after a reset occurs."""
         # use this method to access the RAM of the emulator
         # and perform setup for each episode.
         # the method returns None
-        pass
+        if self.should_load_state:
+            self._load_ram_from_file()
 
     def _did_step(self, done):
         """

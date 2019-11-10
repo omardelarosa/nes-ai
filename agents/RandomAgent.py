@@ -4,6 +4,7 @@ from nes_py._image_viewer import ImageViewer
 from nes_py.app.play_human import play_human
 from nes_py.app.cli import _get_args
 import time
+import json
 
 
 def play_human_custom(env):
@@ -15,7 +16,7 @@ def play_human_custom(env):
     play_human(env)
 
 
-def play_random_custom(env, steps):
+def play_random_custom(env, steps, ram):
     _NOP = 0
 
     actions = [
@@ -37,6 +38,13 @@ def play_random_custom(env, steps):
 
     action = 0
     start = time.time()
+
+    for i in range(0, len(ram)):
+        env.ram[i] = ram[i]
+        print("ram:", env.ram[i], ram[i])
+
+    env.reset()
+
     # play_human
     for t in range(0, steps):
         # get the mapping of keyboard keys to actions in the environment
@@ -75,13 +83,25 @@ class RandomAgent():
     def __init__(self, args):
         # required arg
         rom_path = args.rom
+        save_state_path = ""
+        load_state_path = ""
+        if args.savePath:
+            save_state_path = args.savePath
+        if args.loadState:
+            load_state_path = args.loadState
 
         # create the environment
-        env = ROMWrapper(rom_path)
+        env = ROMWrapper(rom_path, save_state_path, load_state_path)
+
+        ram = []
+        with open(load_state_path) as json_file:
+            data = json.load(json_file)
+            for p in data['ram']:
+                ram.append(p)
 
         if args.mode == 'human':
             print("Playing as human")
             play_human_custom(env)
         else:
             print("Playing with random custom agent")
-            play_random_custom(env, args.steps)
+            play_random_custom(env, args.steps, ram)
