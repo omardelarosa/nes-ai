@@ -17,6 +17,8 @@ import torchvision.transforms as T
 import torch.optim as optim
 from torch.distributions import Categorical
 
+steps_done = 0
+
 
 class DQRAgent():
     def __init__(self, args):
@@ -50,10 +52,9 @@ class DQRAgent():
 
         screen_height = 240
         screen_width = 256
-        steps_done = 0
 
         DATA_PATH = "data/dqr_model.pt"
-        SHOULD_LOAD_STATE = True
+        SHOULD_LOAD_STATE = False  # use pre-trained model or not
         SHOULD_RENDER = True
         SHOULD_TRAIN = True
         FLAT_STATE_SIZE = 2048
