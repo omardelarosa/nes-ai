@@ -1,11 +1,5 @@
-from . import TestAgent
-from . import BasicAgent
-from . import DQRAgent
-from . import RandomAgent
+from . import rom_wrapper
 
 __all__ = [
-    'TestAgent',
-    'BasicAgent',
-    'DQRAgent',
-    'RandomAgent'
+    'rom_wrapper'
 ]
