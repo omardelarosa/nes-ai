@@ -1,2 +1,4 @@
 torch
 torchvision
+gym
+nes-py
