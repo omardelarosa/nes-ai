@@ -80,7 +80,7 @@ class HillClimberAgent:
                 step = manual_solve[solve_step]
                 act_num = self.action_to_num[step]
                 solve_step += 1
-                print('pressing', step, act_num)
+                # print('pressing', step, act_num)
             env.step(act_num)
             env.render()
         print('speeding through wait')
@@ -131,7 +131,7 @@ class HillClimberAgent:
         best_score = self.evaluate_action_sequence(env, steps, change_button_interval, best_action_sequence)
         while True:
             env.reset()
-            new_action_sequence = self.get_modified_actions(env, best_action_sequence, 0.5)
+            new_action_sequence = self.get_modified_actions(env, best_action_sequence, 0.2)
             new_score = self.evaluate_action_sequence(env, steps, change_button_interval, new_action_sequence)
             print('eval seq:', new_action_sequence)
             print('got score:', new_score, 'vs best score:', best_score)
@@ -163,7 +163,7 @@ class HillClimberAgent:
             if t % change_button_interval == 0:
                 action = action_sequence[action_iter]
                 action_iter += 1
-                print('changed to ', self.actions[action], action)
+                # print('changed to ', self.actions[action], action)
 
             observation, reward, done, info = env.step(action)
             # runs game at about 60fps
