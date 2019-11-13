@@ -9,6 +9,6 @@ __all__ = [
     'BasicAgent',
     'DQRAgent',
     'RandomAgent',
-    'HillClimberAgent'
+    'HillClimberAgent',
     'BackupTestAgent'
 ]
