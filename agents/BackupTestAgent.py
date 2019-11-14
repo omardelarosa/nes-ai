@@ -31,24 +31,30 @@ class BackupTestAgent():
         self.env = ROMWrapper(rom_path)
         self.env = JoypadSpace(self.env, actions)
         observation = self.env.reset()
-        for i in range(5):
+        for i in range(8):
             if i !=0:
+                time.sleep(0.016667*2.2)
                 observation = self.env.reset()
+                time.sleep(0.016667*2.2)
                 print("Reset After Backup")
             for t in range(1000):
-                self.env.render()
+                if t%200 == 0:
+                    self.env.render()
                 action = self.env.action_space.sample()  # your agent here (this takes random actions)
                 observation, reward, done, info = self.env.step(action)
-                print("---------------------------t: ", t)
+                print("---------------------------t: ", t, " i: ", i)
                 print("action space: ", self.env.action_space)
                 # print("obs: ", observation)
                 print("reward: ", reward)
                 print("info: ", info)
-                # runs game at about 60fps
-                time.sleep(0.016667)
-                if t % 750 == 0:
+                # 0.016667 runs game at about 60fps
+                time.sleep(0.016667*2.2)
+                if t == 750 and i%3 ==0:
+                    self.env.step(0)
+                    time.sleep(0.016667*2.2)
                     self.env.backup()
+                    
                     print("state backed up")
-                if done:
-                    observation = self.env.reset()
+                #if done:
+                    #observation = self.env.reset()
         self.env.close()
