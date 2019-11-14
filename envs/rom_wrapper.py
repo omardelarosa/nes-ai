@@ -84,7 +84,10 @@ class ROMWrapper(NESEnv):
         return {
             'ram': np.array(self.ram)
         }
+    def backup(self):
+        self._backup()
 
-
+    def restore(self):
+        self._restore()
 # explicitly define the outward facing API for the module
 __all__ = [ROMWrapper.__name__]
